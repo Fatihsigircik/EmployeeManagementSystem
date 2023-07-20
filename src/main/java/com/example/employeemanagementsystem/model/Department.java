@@ -20,7 +20,6 @@ public class Department {
     @Column(name = "create_date")
     private Date createDate;
 
-    // Getters, setters ve diğer constructor'lar
     @JsonBackReference
     @OneToMany(mappedBy = "department")
     private List<Employee> employees;

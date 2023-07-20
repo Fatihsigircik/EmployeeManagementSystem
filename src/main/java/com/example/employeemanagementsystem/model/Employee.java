@@ -29,8 +29,6 @@ public class Employee {
     private Date createDate;
 
 
-    // Getters, setters ve diğer constructor'lar
-
     // Getter and Setter methods
     public Long getId() {
         return id;

@@ -43,3 +43,7 @@
 2023-07-20 02:56:03,337 INFO [main] o.s.m.w.MockServletContext [MockServletContext.java:435] Initializing Spring TestDispatcherServlet ''
 2023-07-20 02:56:03,339 INFO [main] o.s.t.w.s.TestDispatcherServlet [FrameworkServlet.java:532] Initializing Servlet ''
 2023-07-20 02:56:03,343 INFO [main] o.s.t.w.s.TestDispatcherServlet [FrameworkServlet.java:554] Completed initialization in 3 ms
+2023-07-20 03:00:57,856 INFO [SpringApplicationShutdownHook] o.s.o.j.LocalContainerEntityManagerFactoryBean [AbstractEntityManagerFactoryBean.java:650] Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-07-20 03:00:58,250 WARN [SpringApplicationShutdownHook] o.s.b.f.s.DisposableBeanAdapter [DisposableBeanAdapter.java:211] Invocation of destroy method failed on bean with name 'inMemoryDatabaseShutdownExecutor': org.h2.jdbc.JdbcSQLNonTransientConnectionException: Database is already closed (to disable automatic closing at VM shutdown, add ";DB_CLOSE_ON_EXIT=FALSE" to the db URL) [90121-214]
+2023-07-20 03:00:58,252 INFO [SpringApplicationShutdownHook] c.z.h.HikariDataSource [HikariDataSource.java:350] HikariPool-1 - Shutdown initiated...
+2023-07-20 03:00:58,389 INFO [SpringApplicationShutdownHook] c.z.h.HikariDataSource [HikariDataSource.java:352] HikariPool-1 - Shutdown completed.

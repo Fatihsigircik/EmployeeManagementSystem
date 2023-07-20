@@ -43,5 +43,4 @@ public class DepartmentServiceTest {
         assertEquals("Finans", result.get(1).getDepartmentName());
     }
 
-    // Add other test methods for other service methods
 }

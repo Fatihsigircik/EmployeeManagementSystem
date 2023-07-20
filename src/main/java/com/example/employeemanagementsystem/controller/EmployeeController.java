@@ -52,6 +52,5 @@ public class EmployeeController {
         employeeService.deleteEmployee(id);
     }
 
-    // Diğer endpoint'ler ve filtreleme endpoint'lerini buraya ekleyebilirsiniz.
 
 }
