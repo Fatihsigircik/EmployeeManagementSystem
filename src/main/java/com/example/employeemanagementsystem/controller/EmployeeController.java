@@ -1,11 +1,15 @@
 package com.example.employeemanagementsystem.controller;
 
 import com.example.employeemanagementsystem.model.Employee;
+import com.example.employeemanagementsystem.model.EmployeeFilter;
 import com.example.employeemanagementsystem.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/employees")
@@ -19,8 +23,19 @@ public class EmployeeController {
     }
 
     @GetMapping
-    public List<Employee> getAllEmployees() {
-        return employeeService.getAllEmployees();
+    public Page<Employee> getAllEmployees(@RequestParam(required = false) String name,
+                                            @RequestParam(required = false) String surname,
+                                            @RequestParam(required = false) Double salary,
+                                          @RequestParam(required = false) String position,
+                                          @RequestParam(defaultValue = "0") int page,
+                                          @RequestParam(defaultValue = "10") int size) {
+        EmployeeFilter employeeFilter = new EmployeeFilter();
+        employeeFilter.setName(name);
+        employeeFilter.setSurname(surname);
+        employeeFilter.setSalary(salary);
+        employeeFilter.setPosition(position);
+        Pageable pageable = PageRequest.of(page, size);
+        return employeeService.getAllEmployees(employeeFilter, pageable);
     }
 
     @GetMapping("/{id}")

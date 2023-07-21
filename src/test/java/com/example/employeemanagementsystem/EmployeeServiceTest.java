@@ -9,11 +9,17 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
+import static org.mockito.ArgumentMatchers.any;
 
 @ExtendWith(MockitoExtension.class)
 public class EmployeeServiceTest {
@@ -50,15 +56,17 @@ public class EmployeeServiceTest {
         employee2.setDepartment(department2);
 
         List<Employee> employees = Arrays.asList(employee1, employee2);
-        when(employeeRepository.findAll()).thenReturn(employees);
+        Page<Employee> page = new PageImpl<>(employees);
+        when(employeeRepository.findAll(any(Specification.class), any(Pageable.class))).thenReturn(page);
+
 
         // Call the service method
-        List<Employee> result = employeeService.getAllEmployees();
+        Page<Employee> result = employeeService.getAllEmployees(null, Pageable.unpaged());
 
         // Verify the result
-        assertEquals(2, result.size());
-        assertEquals("Ali", result.get(0).getName());
-        assertEquals("Bilgi İşlem", result.get(1).getDepartment().getDepartmentName());
+        assertEquals(2, result.getContent().size());
+        assertEquals("Ali", result.getContent().get(0).getName());
+        assertEquals("Bilgi İşlem", result.getContent().get(1).getDepartment().getDepartmentName());
     }
 
 }

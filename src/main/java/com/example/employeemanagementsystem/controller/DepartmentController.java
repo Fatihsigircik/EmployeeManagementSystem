@@ -1,8 +1,15 @@
 package com.example.employeemanagementsystem.controller;
 
 import com.example.employeemanagementsystem.model.Department;
+import com.example.employeemanagementsystem.model.DepartmentFilter;
 import com.example.employeemanagementsystem.service.DepartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.web.bind.annotation.*;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,9 +26,16 @@ public class DepartmentController {
     }
 
     @GetMapping
-    public List<Department> getAllDepartments() {
-        return departmentService.getAllDepartments();
+    public Page<Department> getAllDepartments(
+            @RequestParam(required = false) String departmentName,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        DepartmentFilter departmentFilter = new DepartmentFilter();
+        departmentFilter.setDepartmentName(departmentName);
+        Pageable pageable = PageRequest.of(page, size);
+        return departmentService.getAllDepartments(departmentFilter, pageable);
     }
+
 
     @GetMapping("/{id}")
     public Department getDepartmentById(@PathVariable Long id) {

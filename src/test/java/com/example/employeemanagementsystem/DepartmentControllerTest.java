@@ -2,6 +2,7 @@ package com.example.employeemanagementsystem;
 
 import com.example.employeemanagementsystem.controller.DepartmentController;
 import com.example.employeemanagementsystem.model.Department;
+import com.example.employeemanagementsystem.model.DepartmentFilter;
 import com.example.employeemanagementsystem.service.DepartmentService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -9,6 +10,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -46,7 +50,8 @@ public class DepartmentControllerTest {
         department2.setId(2L);
         department2.setDepartmentName("Finans");
         List<Department> departments = Arrays.asList(department1, department2);
-        when(departmentService.getAllDepartments()).thenReturn(departments);
+        Page<Department> page = new PageImpl<>(departments);
+        when(departmentService.getAllDepartments(null,Pageable.unpaged())).thenReturn(page);
 
         // Perform the GET request and verify the result
         mockMvc.perform(MockMvcRequestBuilders.get("/api/departments")

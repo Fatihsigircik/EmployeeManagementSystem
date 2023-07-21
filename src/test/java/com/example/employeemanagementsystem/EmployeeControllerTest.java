@@ -10,6 +10,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -62,7 +65,8 @@ public class EmployeeControllerTest {
         department2.setDepartmentName("Bilgi İşlem");
         employee2.setDepartment(department2);
         List<Employee> employees = Arrays.asList(employee1, employee2);
-        when(employeeService.getAllEmployees()).thenReturn(employees);
+        Page<Employee> page = new PageImpl<>(employees);
+        when(employeeService.getAllEmployees(null, Pageable.unpaged())).thenReturn(page);
 
         // Perform the GET request and verify the result
         mockMvc.perform(MockMvcRequestBuilders.get("/api/employees")
